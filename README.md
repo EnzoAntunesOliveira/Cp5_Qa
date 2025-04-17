@@ -52,7 +52,7 @@ Este projeto de QA abrange testes funcionais e não funcionais realizados sobre 
 
 2. Instale as dependências:
    ```
-   pip install -r requirements.txt
+   pip install selenium pytest
    ```
 
 3. Execute os testes:
@@ -109,6 +109,6 @@ Alguns testes (API e Web) requerem autenticação:
 
 ## 👨‍💻 Autores
 
-Arthur Fenili RM 552752
-Enzo Antunes Oliveira RM 553185
-Vinicío Raphael RM 553813
+### Arthur Fenili RM 552752
+### Enzo Antunes Oliveira RM 553185
+### Vinicío Raphael RM 553813
