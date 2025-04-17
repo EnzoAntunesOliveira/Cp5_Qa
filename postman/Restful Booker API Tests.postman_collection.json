@@ -1,0 +1,226 @@
+{
+	"info": {
+		"_postman_id": "095cd711-4d0a-4da3-a61c-83815a01d975",
+		"name": "Restful Booker API Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34555823"
+	},
+	"item": [
+		{
+			"name": "GET /room",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Body não está vazio\", function () {",
+							"    pm.expect(pm.response.text()).to.not.be.empty;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3003/api/room",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3003",
+					"path": [
+						"api",
+						"room"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /auth (login)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"var jsonData = pm.response.json();",
+							"pm.environment.set(\"token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"username\": \"admin\",\n  \"password\": \"password\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3003/api/auth",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3003",
+					"path": [
+						"api",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /booking",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"var jsonData = pm.response.json();",
+							"pm.environment.set(\"bookingId\", jsonData.bookingid);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Cookie",
+						"value": "token={{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"roomid\": 1,\n  \"firstname\": \"Lucas\",\n  \"lastname\": \"Ferreira\",\n  \"depositpaid\": true,\n  \"checkin\": \"2025-04-18\",\n  \"checkout\": \"2025-04-20\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3003/api/booking",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3003",
+					"path": [
+						"api",
+						"booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /booking/:id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"var jsonData = pm.response.json();",
+							"pm.environment.set(\"bookingId\", jsonData.bookingid);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Cookie",
+						"value": "token={{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"roomid\": 1,\n  \"firstname\": \"Lucas\",\n  \"lastname\": \"QA\",\n  \"depositpaid\": true,\n  \"checkin\": \"2025-04-19\",\n  \"checkout\": \"2025-04-21\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3003/api/booking/{{bookingId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3003",
+					"path": [
+						"api",
+						"booking",
+						"{{bookingId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /booking/:id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 202 ou 200\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 202]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token={{token}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3003/api/booking/{{bookingId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3003",
+					"path": [
+						"api",
+						"booking",
+						"{{bookingId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
